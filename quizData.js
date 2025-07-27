@@ -131,7 +131,6 @@ const questions = [
     }
 ];
 
-// Codes animaux (ambigus)
 const positiveCodes = [
     "PHOENIX-ARDENT 🔥",
     "GUEPARD-AGILE 🐆",
@@ -147,3 +146,109 @@ const negativeCodes = [
     "HIBOU-NOCTURNE 🦉",
     "CERF-INSOLITE 🦌"
 ];
+
+function evaluateQuiz(userAnswers) {
+    let totalScore = 0;
+    const correctAnswersCount = 0; // Not used for scoring, but good for tracking
+
+    for (const question of questions) {
+        const userAnswer = userAnswers[question.id];
+        if (userAnswer === question.answer) {
+            totalScore += question.score;
+            correctAnswersCount++;
+        }
+    }
+
+    const maxScore = questions.length * 10; // 10 questions * 10 points each = 100
+    const scorePercentage = (totalScore / maxScore) * 100;
+
+    let feedback = "";
+    let animalCode = "";
+
+    if (scorePercentage >= 80) {
+        feedback = "**Incroyable !** Ton score montre une grande empathie et une forte conscience sociale. Tu es une personne très positive et respectueuse des autres. Continue comme ça !";
+        animalCode = positiveCodes[Math.floor(Math.random() * positiveCodes.length)];
+    } else if (scorePercentage >= 50) {
+        feedback = "**Pas mal !** Tu as de bonnes bases en matière de respect et d'empathie, mais il y a toujours des occasions d'être encore plus attentif(ve) aux autres. Pense à la façon dont tes actions impactent ceux qui t'entourent.";
+        // For "average" scores (50-79%), we can mix positive and negative codes or lean towards slightly more positive ones.
+        // Let's create a blended approach for this range.
+        const allCodes = [...positiveCodes, ...negativeCodes];
+        animalCode = allCodes[Math.floor(Math.random() * allCodes.length)];
+    } else if (scorePercentage >= 20) {
+        feedback = "**Tu peux mieux faire.** Ton score suggère qu'il y a des aspects où tu pourrais améliorer ta manière d'interagir avec les autres. Essaye de te mettre plus souvent à la place des autres et de réfléchir à l'impact de tes paroles et de tes actes.";
+        animalCode = negativeCodes[Math.floor(Math.random() * negativeCodes.length)];
+    } else {
+        feedback = "**Il y a du travail.** Ton score indique que tu pourrais vraiment bénéficier d'une meilleure compréhension des autres et d'une plus grande empathie. Chaque interaction est une chance de montrer du respect et de la gentillesse. Réfléchis aux conséquences de tes actions sur les autres.";
+        animalCode = negativeCodes[Math.floor(Math.random() * negativeCodes.length)];
+    }
+
+    return {
+        totalScore: totalScore,
+        scorePercentage: scorePercentage,
+        feedback: feedback,
+        animalCode: animalCode
+    };
+}
+
+// --- Example Usage ---
+// Imagine a user has submitted these answers:
+const exampleUserAnswers = {
+    "bi1": "c", // Correct
+    "bi2": "c", // Correct
+    "bi3": "b", // Correct
+    "bi4": "b", // Correct
+    "bi5": "a", // Incorrect, but a "medium" choice
+    "bi6": "a", // Incorrect
+    "bi7": "b", // Correct
+    "bi8": "b", // Correct
+    "bi9": "a", // Incorrect
+    "bi10": "c" // Incorrect
+};
+
+const results = evaluateQuiz(exampleUserAnswers);
+console.log("Total Score:", results.totalScore);
+console.log("Score Percentage:", results.scorePercentage.toFixed(2) + "%");
+console.log("Feedback:", results.feedback);
+console.log("Animal Code:", results.animalCode);
+
+// Another example for a lower score
+const lowScoreUserAnswers = {
+    "bi1": "a",
+    "bi2": "a",
+    "bi3": "a",
+    "bi4": "a",
+    "bi5": "b",
+    "bi6": "c",
+    "bi7": "a",
+    "bi8": "a",
+    "bi9": "a",
+    "bi10": "a"
+};
+
+const lowResults = evaluateQuiz(lowScoreUserAnswers);
+console.log("\n--- Low Score Example ---");
+console.log("Total Score:", lowResults.totalScore);
+console.log("Score Percentage:", lowResults.scorePercentage.toFixed(2) + "%");
+console.log("Feedback:", lowResults.feedback);
+console.log("Animal Code:", lowResults.animalCode);
+
+// Example for a high score
+const highUserAnswers = {
+    "bi1": "c",
+    "bi2": "c",
+    "bi3": "b",
+    "bi4": "b",
+    "bi5": "c",
+    "bi6": "b",
+    "bi7": "b",
+    "bi8": "b",
+    "bi9": "b",
+    "bi10": "b"
+};
+
+const highResults = evaluateQuiz(highUserAnswers);
+console.log("\n--- High Score Example ---");
+console.log("Total Score:", highResults.totalScore);
+console.log("Score Percentage:", highResults.scorePercentage.toFixed(2) + "%");
+console.log("Feedback:", highResults.feedback);
+console.log("Animal Code:", highResults.animalCode);
