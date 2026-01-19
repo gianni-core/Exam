@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Test d'amitié</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f6ff;
+            padding: 20px;
+        }
+        .container {
+            max-width: 700px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #4a6cff;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        button {
+            background: #4a6cff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #364fc7;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>💙 Test d'amitié</h1>
+
+    <form id="quiz">
+
+        <div class="question">
+            <p>1. Quand cette personne t’envoie un message :</p>
+            <label><input type="radio" name="q1" value="1"> Tu réponds quand tu peux</label><br>
+            <label><input type="radio" name="q1" value="2"> Tu réponds assez vite</label><br>
+            <label><input type="radio" name="q1" value="3"> Tu es content(e) et tu réponds rapidement</label><br>
+            <label><input type="radio" name="q1" value="4"> Tu réponds immédiatement avec enthousiasme</label>
+        </div>
+
+        <div class="question">
+            <p>2. Si tu as une bonne nouvelle :</p>
+            <label><input type="radio" name="q2" value="1"> Tu n’y penses pas spécialement</label><br>
+            <label><input type="radio" name="q2" value="2"> Tu peux lui dire plus tard</label><br>
+            <label><input type="radio" name="q2" value="3"> Il/elle fait partie des premiers</label><br>
+            <label><input type="radio" name="q2" value="4"> C’est la première personne à qui tu penses</label>
+        </div>
+
+        <div class="question">
+            <p>3. Passer du temps avec cette personne :</p>
+            <label><input type="radio" name="q3" value="1"> Ça ne te dérange pas</label><br>
+            <label><input type="radio" name="q3" value="2"> C’est agréable</label><br>
+            <label><input type="radio" name="q3" value="3"> Tu apprécies vraiment</label><br>
+            <label><input type="radio" name="q3" value="4"> Tu te sens toujours bien</label>
+        </div>
+
+        <div class="question">
+            <p>4. Quand vous ne vous parlez pas :</p>
+            <label><input type="radio" name="q4" value="1"> Tu ne le remarques pas</label><br>
+            <label><input type="radio" name="q4" value="2"> Tu t’en rends compte</label><br>
+            <label><input type="radio" name="q4" value="3"> Ça te manque un peu</label><br>
+            <label><input type="radio" name="q4" value="4"> Ça te manque beaucoup</label>
+        </div>
+
+        <div class="question">
+            <p>5. Comment te sens-tu avec lui/elle ?</p>
+            <label><input type="radio" name="q5" value="1"> Normal</label><br>
+            <label><input type="radio" name="q5" value="2"> À l’aise</label><br>
+            <label><input type="radio" name="q5" value="3"> En confiance</label><br>
+            <label><input type="radio" name="q5" value="4"> Totalement toi-même</label>
+        </div>
+
+        <div class="question">
+            <p>6. Si cette personne a un problème :</p>
+            <label><input type="radio" name="q6" value="1"> Tu écoutes si tu peux</label><br>
+            <label><input type="radio" name="q6" value="2"> Tu essaies d’aider</label><br>
+            <label><input type="radio" name="q6" value="3"> Tu la soutiens vraiment</label><br>
+            <label><input type="radio" name="q6" value="4"> Tu ferais presque tout pour l’aider</label>
+        </div>
+
+        <div class="question">
+            <p>7. Cette personne est pour toi :</p>
+            <label><input type="radio" name="q7" value="1"> Une connaissance</label><br>
+            <label><input type="radio" name="q7" value="2"> Un(e) ami(e)</label><br>
+            <label><input type="radio" name="q7" value="3"> Un(e) ami(e) important(e)</label><br>
+            <label><input type="radio" name="q7" value="4"> Une personne très spéciale</label>
+        </div>
+
+        <button type="button" onclick="calculate()">Voir le résultat</button>
+    </form>
+
+    <div id="result"></div>
+</div>
+
+<script>
+function calculate() {
+    let total = 0;
+    let max = 28;
+
+    for (let i = 1; i <= 7; i++) {
+        let q = document.querySelector('input[name="q' + i + '"]:checked');
+        if (!q) {
+            alert("Merci de répondre à toutes les questions !");
+            return;
+        }
+        total += parseInt(q.value);
+    }
+
+    let percent = Math.round((total / max) * 100);
+    let message = "";
+
+    if (percent <= 25) message = "Appréciation légère 🤝";
+    else if (percent <= 50) message = "Bonne amitié 😊";
+    else if (percent <= 75) message = "Forte amitié 💙";
+    else message = "Amitié très importante 💖";
+
+    document.getElementById("result").innerHTML =
+        "💯 Pourcentage d’amitié : " + percent + "%<br>" + message;
+}
+</script>
+
+</body>
+</html>
